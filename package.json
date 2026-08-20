@@ -1,0 +1,17 @@
+{
+  "name": "hackversepakistan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Coming soon page for HackVerse Pakistan on Cloudflare Pages.",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages deploy .",
+    "cf:login": "wrangler login",
+    "db:create": "wrangler d1 create hackversepakistan",
+    "db:migrate:local": "wrangler d1 migrations apply hackversepakistan --local",
+    "db:migrate:remote": "wrangler d1 migrations apply hackversepakistan --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^4.33.0"
+  }
+}

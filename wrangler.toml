@@ -1,0 +1,8 @@
+name = "hackversepakistan"
+compatibility_date = "2026-08-20"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hackversepakistan"
+database_id = "7b413283-e16b-4a1a-8bf3-8d93a7213593"

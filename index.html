@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HackVerse Pakistan | Coming Soon</title>
+    <meta
+      name="description"
+      content="HackVerse Pakistan is launching soon. Build, collaborate, and innovate with Pakistan's next generation of hackers, builders, and creators."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <p class="brand">HackVerse Pakistan</p>
+        <p class="tagline">Code. Build. Belong.</p>
+      </header>
+
+      <main class="hero">
+        <p class="kicker">A new builder community is loading...</p>
+        <h1>Something extraordinary is coming soon.</h1>
+        <p class="lead">
+          Building a Hackathon Culture in Pakistan.
+        </p>
+
+        <section class="countdown-card" aria-label="Launch countdown">
+          <h2>Launch Countdown</h2>
+          <div class="countdown-grid">
+            <div class="timebox">
+              <span id="days">00</span>
+              <small>Days</small>
+            </div>
+            <div class="timebox">
+              <span id="hours">00</span>
+              <small>Hours</small>
+            </div>
+            <div class="timebox">
+              <span id="minutes">00</span>
+              <small>Minutes</small>
+            </div>
+            <div class="timebox">
+              <span id="seconds">00</span>
+              <small>Seconds</small>
+            </div>
+          </div>
+          <p class="launch-date">
+            Target launch:
+            <time id="launchDate" datetime="2026-09-19T18:00:00+05:00">19 Sep 2026</time>
+          </p>
+        </section>
+
+        <form class="notify-form" id="notifyForm" novalidate>
+          <label class="visually-hidden" for="notifyEmail">Email</label>
+          <input
+            id="notifyEmail"
+            name="email"
+            type="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          />
+          <label class="visually-hidden" for="notifyWhatsapp">WhatsApp number</label>
+          <input
+            id="notifyWhatsapp"
+            name="whatsapp"
+            type="tel"
+            placeholder="WhatsApp number (e.g. +923001234567)"
+            autocomplete="tel"
+            required
+          />
+          <button class="btn btn-primary" type="submit">Notify Me</button>
+          <a class="btn btn-secondary" href="#" aria-disabled="true">Partnerships Opening Soon</a>
+        </form>
+        <p id="notifyMessage" class="notify-message" role="status" aria-live="polite"></p>
+
+        <ul class="highlights" aria-label="What to expect">
+          <li>National hackathons and coding challenges</li>
+          <li>Mentorship from industry experts</li>
+          <li>Community projects with real impact</li>
+        </ul>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
