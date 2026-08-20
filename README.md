@@ -53,3 +53,13 @@ In Cloudflare dashboard:
 - Add your custom domain to the Pages project.
 - Set DNS records Cloudflare suggests (usually `CNAME` for `www` and apex mapping).
 - Keep SSL/TLS enabled (Full/Strict recommended once origin cert is valid).
+
+## 8) Enable auto-deploy from GitHub
+
+This repo includes a GitHub Actions workflow at `.github/workflows/deploy-pages.yml` that deploys on every push to `main`.
+
+Add these repository secrets in GitHub:
+- `CLOUDFLARE_API_TOKEN` - Cloudflare API token with Pages and D1 permissions
+- `CLOUDFLARE_ACCOUNT_ID` - your Cloudflare account id
+
+Then push to `main` and the deploy runs automatically.
