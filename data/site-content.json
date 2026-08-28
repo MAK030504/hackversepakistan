@@ -1,0 +1,264 @@
+{
+  "globalSettings": {
+    "siteName": "HackVerse Pakistan",
+    "tagline": "Build. Compete. Connect.",
+    "shortDescription": "Building a hackathon culture in Pakistan.",
+    "contactEmail": "team@hackverse.pk",
+    "footerText": "Building a hackathon culture in Pakistan.",
+    "copyrightYear": "2026",
+    "logoUrl": "",
+    "faviconUrl": "/favicon.svg",
+    "socialPreviewImage": "/social-preview.svg",
+    "announcement": {
+      "enabled": true,
+      "text": "Registrations for HackVerse #001 are now open.",
+      "linkUrl": "https://forms.gle/hackverse-001-register",
+      "linkText": "Register now",
+      "startAtIso": "",
+      "endAtIso": ""
+    }
+  },
+  "siteConfig": {
+    "registerUrl": "https://forms.gle/hackverse-001-register",
+    "communityUrl": "https://discord.gg/hackversepakistan",
+    "socialLinks": [
+      { "label": "LinkedIn", "url": "https://www.linkedin.com" },
+      { "label": "Instagram", "url": "https://www.instagram.com" },
+      { "label": "Discord", "url": "https://discord.com" },
+      { "label": "X", "url": "https://x.com" }
+    ],
+    "ga4MeasurementId": ""
+  },
+  "mediaLibrary": [
+    {
+      "key": "brand-logo",
+      "label": "Brand Logo",
+      "url": "",
+      "alt": "HackVerse Pakistan logo",
+      "type": "image",
+      "tags": ["brand", "logo"],
+      "isActive": true
+    },
+    {
+      "key": "social-preview-default",
+      "label": "Default Social Preview",
+      "url": "/social-preview.svg",
+      "alt": "HackVerse social preview",
+      "type": "image",
+      "tags": ["seo", "social"],
+      "isActive": true
+    }
+  ],
+  "navigation": {
+    "items": [
+      { "label": "Home", "href": "/", "visible": true },
+      { "label": "Hackathons", "href": "/hackathons/", "visible": true },
+      { "label": "Projects", "href": "/projects/", "visible": true },
+      { "label": "About", "href": "/about/", "visible": true },
+      { "label": "Admin", "href": "/admin/", "visible": true }
+    ]
+  },
+  "home": {
+    "kicker": "HackVerse Pakistan",
+    "title": "Building a hackathon culture in Pakistan.",
+    "lead": "We bring student builders, developers, designers, and creators together through practical hackathons and project-driven learning.",
+    "countdownLabel": "Next launch date",
+    "primaryCtaText": "Register for HackVerse #001",
+    "primaryCtaUrl": "https://forms.gle/hackverse-001-register",
+    "secondaryCtaText": "Join the Community",
+    "secondaryCtaUrl": "https://discord.gg/hackversepakistan",
+    "sections": [
+      { "key": "hero", "label": "Hero", "enabled": true },
+      { "key": "featuredHackathon", "label": "Featured Hackathon", "enabled": true },
+      { "key": "notify", "label": "Notify Section", "enabled": true },
+      { "key": "valueCards", "label": "Value Cards", "enabled": true },
+      { "key": "projectsTeaser", "label": "Projects Teaser", "enabled": true }
+    ],
+    "valueCards": [
+      {
+        "title": "Build",
+        "description": "Turn ideas into working prototypes with real deadlines and team collaboration.",
+        "isActive": true
+      },
+      {
+        "title": "Compete",
+        "description": "Present your solution to judges and learn what makes products stand out.",
+        "isActive": true
+      },
+      {
+        "title": "Connect",
+        "description": "Join a growing community of Pakistani builders and mentors.",
+        "isActive": true
+      }
+    ]
+  },
+  "about": {
+    "kicker": "About HackVerse",
+    "title": "We are building a place where Pakistani students build, not just learn.",
+    "lead": "HackVerse Pakistan exists to strengthen practical technology culture through hackathons, community support, and project publishing.",
+    "cards": [
+      {
+        "title": "Mission",
+        "description": "Enable students and early builders to turn ideas into shipped prototypes with mentorship and healthy competition.",
+        "isActive": true
+      },
+      {
+        "title": "Vision",
+        "description": "Build Pakistan's most trusted hackathon ecosystem where projects and collaboration continue beyond each event.",
+        "isActive": true
+      },
+      {
+        "title": "What comes next",
+        "description": "After HackVerse #001, this platform will host event archives, winner spotlights, and project showcases from every cohort.",
+        "isActive": true
+      }
+    ]
+  },
+  "hackathons": [
+    {
+      "id": "hackverse-001",
+      "slug": "001",
+      "shortName": "#001",
+      "name": "HackVerse Pakistan #001",
+      "status": "registration_open",
+      "dateIso": "2026-09-19T09:00:00+05:00",
+      "dateDisplay": "19 Sep 2026",
+      "duration": "24 Hours",
+      "prizePool": "Rs. 10,000",
+      "entryFee": "Rs. 100",
+      "teamSize": "2-4 Members",
+      "theme": "Build practical products that solve real Pakistan-first challenges.",
+      "location": "Online + Community Hubs",
+      "registrationUrl": "https://forms.gle/hackverse-001-register",
+      "communityUrl": "https://discord.gg/hackversepakistan",
+      "publishStatus": "published",
+      "isActive": true
+    }
+  ],
+  "eventDetails": {
+    "001": {
+      "overview": "HackVerse Pakistan #001 is the first community-driven hackathon by HackVerse Pakistan. It is designed for students and early-career builders to ship real projects, collaborate in teams, and present solutions that can make measurable impact.",
+      "timeline": [
+        "Registration opens: 25 Aug 2026",
+        "Registration closes: 17 Sep 2026 (11:59 PM PKT)",
+        "Opening ceremony and challenge briefing: 19 Sep 2026",
+        "Build window: 24 hours from kickoff",
+        "Submission deadline: 20 Sep 2026",
+        "Demos and judging: 20 Sep 2026",
+        "Winners announced: 20 Sep 2026"
+      ],
+      "rules": [
+        "Participants must register before the deadline using the official registration form.",
+        "Teams can have 2 to 4 members. Solo registration may be matched into teams where possible.",
+        "Projects must be built during the event window. Existing code or templates are allowed only as support, not as the core project.",
+        "All submissions must include a project description, team members, and a demo link or recorded walkthrough.",
+        "Plagiarism, copied submissions, or harmful content lead to disqualification."
+      ],
+      "eligibility": [
+        "Open to Pakistani students and early-career developers/designers/builders.",
+        "Teams can be from the same or different institutions.",
+        "Participants must follow the HackVerse code of conduct.",
+        "Internet access and required software setup are participant responsibilities."
+      ],
+      "judgingCriteria": [
+        "Problem relevance and clarity (20%)",
+        "Solution quality and usability (25%)",
+        "Technical implementation (25%)",
+        "Originality and creativity (15%)",
+        "Demo quality and presentation (15%)"
+      ],
+      "judges": [
+        { "name": "Judge Slot 1", "role": "Startup / Product Leader (TBA)" },
+        { "name": "Judge Slot 2", "role": "Senior Engineer (TBA)" },
+        { "name": "Judge Slot 3", "role": "Ecosystem / Community Mentor (TBA)" }
+      ],
+      "mentors": [
+        { "name": "Mentor Slot 1", "role": "Frontend and Product Mentor (TBA)" },
+        { "name": "Mentor Slot 2", "role": "AI and Backend Mentor (TBA)" },
+        { "name": "Mentor Slot 3", "role": "Pitch and Storytelling Mentor (TBA)" }
+      ],
+      "faq": [
+        {
+          "question": "How do I register?",
+          "answer": "Use the official registration link on this website. After registering, join the HackVerse community channel for updates."
+        },
+        {
+          "question": "Can beginners participate?",
+          "answer": "Yes. Beginners are encouraged to join, and mentors will support teams throughout the event."
+        },
+        {
+          "question": "Is the event online or in-person?",
+          "answer": "Phase 1 is online-first with optional community hubs depending on partner availability."
+        },
+        {
+          "question": "What must be included in the submission?",
+          "answer": "A project description, team details, tech stack, and a working demo link or video walkthrough."
+        }
+      ]
+    }
+  },
+  "projects": [
+    {
+      "name": "AI Study Buddy",
+      "description": "Sample showcase card for HackVerse #001 project publishing format.",
+      "hackathonId": "hackverse-001",
+      "team": "Team Placeholder",
+      "members": ["Member A", "Member B"],
+      "techStack": ["Python", "React", "OpenAI API"],
+      "githubUrl": "",
+      "demoUrl": "",
+      "award": "",
+      "publishStatus": "published",
+      "isActive": true
+    },
+    {
+      "name": "AgriSense Lite",
+      "description": "Prototype card showing how future projects will appear with stack and links.",
+      "hackathonId": "hackverse-001",
+      "team": "Team Placeholder",
+      "members": ["Member C", "Member D"],
+      "techStack": ["Node.js", "Map APIs", "PostgreSQL"],
+      "githubUrl": "",
+      "demoUrl": "",
+      "award": "",
+      "publishStatus": "published",
+      "isActive": true
+    }
+  ],
+  "seo": {
+    "global": {
+      "titleSuffix": "HackVerse Pakistan",
+      "defaultDescription": "HackVerse Pakistan is building a hackathon culture in Pakistan.",
+      "defaultOgImage": "/social-preview.svg"
+    },
+    "pages": {
+      "home": {
+        "title": "HackVerse Pakistan | Build. Compete. Connect.",
+        "description": "HackVerse Pakistan is building a hackathon culture in Pakistan. Join HackVerse #001, connect with builders, and ship real projects.",
+        "ogImage": "/social-preview.svg"
+      },
+      "hackathons": {
+        "title": "Hackathons | HackVerse Pakistan",
+        "description": "Explore upcoming and past HackVerse Pakistan hackathons.",
+        "ogImage": "/social-preview.svg"
+      },
+      "about": {
+        "title": "About | HackVerse Pakistan",
+        "description": "Learn why HackVerse Pakistan exists and what we are building.",
+        "ogImage": "/social-preview.svg"
+      },
+      "projects": {
+        "title": "Projects | HackVerse Pakistan",
+        "description": "Browse projects built by the HackVerse community.",
+        "ogImage": "/social-preview.svg"
+      }
+    },
+    "hackathonPages": {
+      "001": {
+        "title": "HackVerse #001 | HackVerse Pakistan",
+        "description": "Official event page for HackVerse #001 including timeline, rules, and FAQ.",
+        "ogImage": "/social-preview.svg"
+      }
+    }
+  }
+}

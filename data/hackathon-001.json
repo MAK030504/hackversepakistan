@@ -1,0 +1,60 @@
+{
+  "overview": "HackVerse Pakistan #001 is the first community-driven hackathon by HackVerse Pakistan. It is designed for students and early-career builders to ship real projects, collaborate in teams, and present solutions that can make measurable impact.",
+  "timeline": [
+    "Registration opens: 25 Aug 2026",
+    "Registration closes: 17 Sep 2026 (11:59 PM PKT)",
+    "Opening ceremony and challenge briefing: 19 Sep 2026",
+    "Build window: 24 hours from kickoff",
+    "Submission deadline: 20 Sep 2026",
+    "Demos and judging: 20 Sep 2026",
+    "Winners announced: 20 Sep 2026"
+  ],
+  "rules": [
+    "Participants must register before the deadline using the official registration form.",
+    "Teams can have 2 to 4 members. Solo registration may be matched into teams where possible.",
+    "Projects must be built during the event window. Existing code or templates are allowed only as support, not as the core project.",
+    "All submissions must include a project description, team members, and a demo link or recorded walkthrough.",
+    "Plagiarism, copied submissions, or harmful content lead to disqualification."
+  ],
+  "eligibility": [
+    "Open to Pakistani students and early-career developers/designers/builders.",
+    "Teams can be from the same or different institutions.",
+    "Participants must follow the HackVerse code of conduct.",
+    "Internet access and required software setup are participant responsibilities."
+  ],
+  "judgingCriteria": [
+    "Problem relevance and clarity (20%)",
+    "Solution quality and usability (25%)",
+    "Technical implementation (25%)",
+    "Originality and creativity (15%)",
+    "Demo quality and presentation (15%)"
+  ],
+  "judges": [
+    { "name": "Judge Slot 1", "role": "Startup / Product Leader (TBA)" },
+    { "name": "Judge Slot 2", "role": "Senior Engineer (TBA)" },
+    { "name": "Judge Slot 3", "role": "Ecosystem / Community Mentor (TBA)" }
+  ],
+  "mentors": [
+    { "name": "Mentor Slot 1", "role": "Frontend and Product Mentor (TBA)" },
+    { "name": "Mentor Slot 2", "role": "AI and Backend Mentor (TBA)" },
+    { "name": "Mentor Slot 3", "role": "Pitch and Storytelling Mentor (TBA)" }
+  ],
+  "faq": [
+    {
+      "question": "How do I register?",
+      "answer": "Use the official registration link on this website. After registering, join the HackVerse community channel for updates."
+    },
+    {
+      "question": "Can beginners participate?",
+      "answer": "Yes. Beginners are encouraged to join, and mentors will support teams throughout the event."
+    },
+    {
+      "question": "Is the event online or in-person?",
+      "answer": "Phase 1 is online-first with optional community hubs depending on partner availability."
+    },
+    {
+      "question": "What must be included in the submission?",
+      "answer": "A project description, team details, tech stack, and a working demo link or video walkthrough."
+    }
+  ]
+}

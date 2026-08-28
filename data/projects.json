@@ -1,0 +1,24 @@
+[
+  {
+    "name": "AI Study Buddy",
+    "description": "Sample showcase card for HackVerse #001 project publishing format.",
+    "hackathonId": "hackverse-001",
+    "team": "Team Placeholder",
+    "members": ["Member A", "Member B"],
+    "techStack": ["Python", "React", "OpenAI API"],
+    "githubUrl": "",
+    "demoUrl": "",
+    "award": ""
+  },
+  {
+    "name": "AgriSense Lite",
+    "description": "Prototype card showing how future projects will appear with stack and links.",
+    "hackathonId": "hackverse-001",
+    "team": "Team Placeholder",
+    "members": ["Member C", "Member D"],
+    "techStack": ["Node.js", "Map APIs", "PostgreSQL"],
+    "githubUrl": "",
+    "demoUrl": "",
+    "award": ""
+  }
+]
