@@ -1,19 +1,9 @@
 const statusEl = document.getElementById("adminStatus");
 const tokenInput = document.getElementById("adminToken");
-const contentInput = document.getElementById("contentJson");
 const loadBtn = document.getElementById("loadContentBtn");
-const saveBtn = document.getElementById("saveContentBtn");
-const resetBtn = document.getElementById("resetFallbackBtn");
-const refreshJsonBtn = document.getElementById("refreshJsonBtn");
-const applyJsonBtn = document.getElementById("applyJsonBtn");
 const eventDetailsSlugSelect = document.getElementById("eventDetailsSlug");
-const saveSettingsSectionBtn = document.getElementById("saveSettingsSectionBtn");
 const saveHackathonsSectionBtn = document.getElementById("saveHackathonsSectionBtn");
 const saveProjectsSectionBtn = document.getElementById("saveProjectsSectionBtn");
-const saveSeoSectionBtn = document.getElementById("saveSeoSectionBtn");
-const saveMediaSectionBtn = document.getElementById("saveMediaSectionBtn");
-const seoPageKeySelect = document.getElementById("seoPageKey");
-const seoHackathonUseCurrent = document.getElementById("seoHackathonUseCurrent");
 
 let contentState = null;
 
@@ -115,7 +105,6 @@ function ensureContentDefaults(content = {}) {
         { label: "Hackathons", href: "/hackathons/", visible: true },
         { label: "Projects", href: "/projects/", visible: true },
         { label: "About", href: "/about/", visible: true },
-        { label: "Admin", href: "/admin/", visible: true },
       ];
 
   safe.home.sections = Array.isArray(safe.home.sections)
@@ -182,156 +171,54 @@ function toolbarTemplate(listName, index, removeLabel = "Remove") {
   </div>`;
 }
 
-function renderSimpleFields(content) {
-  setValue("siteName", content.globalSettings.siteName);
-  setValue("siteTagline", content.globalSettings.tagline);
-  setValue("siteShortDescription", content.globalSettings.shortDescription);
-  setValue("contactEmail", content.globalSettings.contactEmail);
-  setValue("registerUrl", content.siteConfig.registerUrl);
-  setValue("communityUrl", content.siteConfig.communityUrl);
-  setValue("ga4MeasurementId", content.siteConfig.ga4MeasurementId);
-  setValue("footerText", content.globalSettings.footerText);
-  setValue("logoUrl", content.globalSettings.logoUrl || "");
-  setValue("faviconUrl", content.globalSettings.faviconUrl || "");
-  setValue("socialPreviewImage", content.globalSettings.socialPreviewImage || "");
-
-  setValue("announcementEnabled", content.globalSettings.announcement.enabled ? "true" : "false");
-  setValue("announcementText", content.globalSettings.announcement.text || "");
-  setValue("announcementLinkUrl", content.globalSettings.announcement.linkUrl || "");
-  setValue("announcementLinkText", content.globalSettings.announcement.linkText || "");
-  setValue("announcementStartAt", content.globalSettings.announcement.startAtIso || "");
-  setValue("announcementEndAt", content.globalSettings.announcement.endAtIso || "");
-
-  setValue("homeKicker", content.home.kicker || "");
-  setValue("homeTitle", content.home.title || "");
-  setValue("homeLead", content.home.lead || "");
-  setValue("homeCountdownLabel", content.home.countdownLabel || "");
-  setValue("homePrimaryCtaText", content.home.primaryCtaText || "");
-  setValue("homePrimaryCtaUrl", content.home.primaryCtaUrl || "");
-  setValue("homeSecondaryCtaText", content.home.secondaryCtaText || "");
-  setValue("homeSecondaryCtaUrl", content.home.secondaryCtaUrl || "");
-
-  setValue("aboutKicker", content.about.kicker || "");
-  setValue("aboutTitle", content.about.title || "");
-  setValue("aboutLead", content.about.lead || "");
-}
-
 function renderRepeaters(content) {
-  renderList("socialLinksList", content.siteConfig.socialLinks, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Label</label><input data-list="social" data-index="${index}" data-field="label" type="text" value="${htmlEscape(item.label)}" /></div>
-        <div><label>URL</label><input data-list="social" data-index="${index}" data-field="url" type="text" value="${htmlEscape(item.url)}" /></div>
-        <div><label>Visible</label><select data-list="social" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
-      </div>
-      ${toolbarTemplate("social", index)}
-    </div>
-  `);
-
-  renderList("navigationList", content.navigation.items, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Label</label><input data-list="nav" data-index="${index}" data-field="label" type="text" value="${htmlEscape(item.label)}" /></div>
-        <div><label>Href</label><input data-list="nav" data-index="${index}" data-field="href" type="text" value="${htmlEscape(item.href)}" /></div>
-        <div><label>Visible</label><select data-list="nav" data-index="${index}" data-field="visible"><option value="true" ${item.visible !== false ? "selected" : ""}>Yes</option><option value="false" ${item.visible === false ? "selected" : ""}>No</option></select></div>
-      </div>
-      ${toolbarTemplate("nav", index)}
-    </div>
-  `);
-
-  renderList("mediaLibraryList", content.mediaLibrary, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Asset Key</label><input data-list="media" data-index="${index}" data-field="key" type="text" value="${htmlEscape(item.key)}" /></div>
-        <div><label>Label</label><input data-list="media" data-index="${index}" data-field="label" type="text" value="${htmlEscape(item.label)}" /></div>
-        <div><label>Type</label><input data-list="media" data-index="${index}" data-field="type" type="text" value="${htmlEscape(item.type)}" /></div>
-        <div><label>Visible</label><select data-list="media" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
-        <div class="admin-col-span-2"><label>URL</label><input data-list="media" data-index="${index}" data-field="url" type="text" value="${htmlEscape(item.url)}" /></div>
-        <div class="admin-col-span-2"><label>Alt Text</label><input data-list="media" data-index="${index}" data-field="alt" type="text" value="${htmlEscape(item.alt)}" /></div>
-        <div class="admin-col-span-2"><label>Tags (comma separated)</label><input data-list="media" data-index="${index}" data-field="tags" type="text" value="${htmlEscape((item.tags || []).join(", "))}" /></div>
-      </div>
-      ${toolbarTemplate("media", index, "Remove Asset")}
-    </div>
-  `);
-
-  renderList("homeCardsList", content.home.valueCards, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Title</label><input data-list="homeCards" data-index="${index}" data-field="title" type="text" value="${htmlEscape(item.title)}" /></div>
-        <div><label>Description</label><input data-list="homeCards" data-index="${index}" data-field="description" type="text" value="${htmlEscape(item.description)}" /></div>
-        <div><label>Visible</label><select data-list="homeCards" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
-      </div>
-      ${toolbarTemplate("homeCards", index)}
-    </div>
-  `);
-
-  renderList("homeSectionsList", content.home.sections, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Key</label><input data-list="homeSections" data-index="${index}" data-field="key" type="text" value="${htmlEscape(item.key)}" /></div>
-        <div><label>Label</label><input data-list="homeSections" data-index="${index}" data-field="label" type="text" value="${htmlEscape(item.label)}" /></div>
-        <div><label>Enabled</label><select data-list="homeSections" data-index="${index}" data-field="enabled"><option value="true" ${item.enabled !== false ? "selected" : ""}>Yes</option><option value="false" ${item.enabled === false ? "selected" : ""}>No</option></select></div>
-      </div>
-      ${toolbarTemplate("homeSections", index)}
-    </div>
-  `);
-
-  renderList("aboutCardsList", content.about.cards, (item, index) => `
-    <div class="admin-list-item">
-      <div class="admin-grid">
-        <div><label>Title</label><input data-list="aboutCards" data-index="${index}" data-field="title" type="text" value="${htmlEscape(item.title)}" /></div>
-        <div><label>Description</label><input data-list="aboutCards" data-index="${index}" data-field="description" type="text" value="${htmlEscape(item.description)}" /></div>
-        <div><label>Visible</label><select data-list="aboutCards" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
-      </div>
-      ${toolbarTemplate("aboutCards", index)}
-    </div>
-  `);
-
   renderList("hackathonsList", content.hackathons, (item, index) => `
-    <div class="admin-list-item">
-      <h4>Hackathon ${index + 1}</h4>
+    <div class="admin-list-item" id="hackathon-item-${index}">
+      <h4>${htmlEscape(item.name || item.shortName || `Hackathon ${index + 1}`)}</h4>
       <div class="admin-grid">
-        <div><label>ID</label><input data-list="hackathons" data-index="${index}" data-field="id" type="text" value="${htmlEscape(item.id)}" /></div>
-        <div><label>Slug</label><input data-list="hackathons" data-index="${index}" data-field="slug" type="text" value="${htmlEscape(item.slug)}" /></div>
-        <div><label>Short Name</label><input data-list="hackathons" data-index="${index}" data-field="shortName" type="text" value="${htmlEscape(item.shortName)}" /></div>
-        <div><label>Name</label><input data-list="hackathons" data-index="${index}" data-field="name" type="text" value="${htmlEscape(item.name)}" /></div>
-        <div><label>Status</label><input data-list="hackathons" data-index="${index}" data-field="status" type="text" value="${htmlEscape(item.status)}" /></div>
-        <div><label>Publish Status</label><select data-list="hackathons" data-index="${index}" data-field="publishStatus"><option value="draft" ${item.publishStatus === "draft" ? "selected" : ""}>Draft</option><option value="published" ${item.publishStatus !== "draft" ? "selected" : ""}>Published</option><option value="archived" ${item.publishStatus === "archived" ? "selected" : ""}>Archived</option></select></div>
-        <div><label>Visible</label><select data-list="hackathons" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
-        <div><label>Date ISO</label><input data-list="hackathons" data-index="${index}" data-field="dateIso" type="text" value="${htmlEscape(item.dateIso)}" /></div>
-        <div><label>Date Display</label><input data-list="hackathons" data-index="${index}" data-field="dateDisplay" type="text" value="${htmlEscape(item.dateDisplay)}" /></div>
-        <div><label>Duration</label><input data-list="hackathons" data-index="${index}" data-field="duration" type="text" value="${htmlEscape(item.duration)}" /></div>
-        <div><label>Prize Pool</label><input data-list="hackathons" data-index="${index}" data-field="prizePool" type="text" value="${htmlEscape(item.prizePool)}" /></div>
-        <div><label>Entry Fee</label><input data-list="hackathons" data-index="${index}" data-field="entryFee" type="text" value="${htmlEscape(item.entryFee)}" /></div>
-        <div><label>Team Size</label><input data-list="hackathons" data-index="${index}" data-field="teamSize" type="text" value="${htmlEscape(item.teamSize)}" /></div>
-        <div><label>Location</label><input data-list="hackathons" data-index="${index}" data-field="location" type="text" value="${htmlEscape(item.location)}" /></div>
-        <div class="admin-col-span-2"><label>Theme</label><input data-list="hackathons" data-index="${index}" data-field="theme" type="text" value="${htmlEscape(item.theme)}" /></div>
+        <div><label>Name</label><input data-list="hackathons" data-index="${index}" data-field="name" type="text" value="${htmlEscape(item.name)}" placeholder="HackVerse #002" /></div>
+        <div><label>Short name</label><input data-list="hackathons" data-index="${index}" data-field="shortName" type="text" value="${htmlEscape(item.shortName)}" placeholder="#002" /></div>
+        <div><label>Slug (URL)</label><input data-list="hackathons" data-index="${index}" data-field="slug" type="text" value="${htmlEscape(item.slug)}" placeholder="002" /></div>
+        <div><label>ID</label><input data-list="hackathons" data-index="${index}" data-field="id" type="text" value="${htmlEscape(item.id)}" placeholder="hv-002" /></div>
+        <div><label>Status label</label><input data-list="hackathons" data-index="${index}" data-field="status" type="text" value="${htmlEscape(item.status)}" placeholder="Registration open" /></div>
+        <div><label>Published</label><select data-list="hackathons" data-index="${index}" data-field="publishStatus"><option value="draft" ${item.publishStatus === "draft" ? "selected" : ""}>Draft</option><option value="published" ${item.publishStatus === "published" ? "selected" : ""}>Published</option><option value="archived" ${item.publishStatus === "archived" ? "selected" : ""}>Archived</option></select></div>
+        <div><label>Visible on site</label><select data-list="hackathons" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
+        <div><label>Event date</label><input data-list="hackathons" data-index="${index}" data-field="dateDisplay" type="text" value="${htmlEscape(item.dateDisplay)}" placeholder="19 Sep 2026" /></div>
+        <div><label>Date (ISO)</label><input data-list="hackathons" data-index="${index}" data-field="dateIso" type="text" value="${htmlEscape(item.dateIso)}" placeholder="2026-09-19" /></div>
+        <div><label>Duration</label><input data-list="hackathons" data-index="${index}" data-field="duration" type="text" value="${htmlEscape(item.duration)}" placeholder="48 hours" /></div>
+        <div><label>Prize pool</label><input data-list="hackathons" data-index="${index}" data-field="prizePool" type="text" value="${htmlEscape(item.prizePool)}" placeholder="PKR 100,000" /></div>
+        <div><label>Entry fee</label><input data-list="hackathons" data-index="${index}" data-field="entryFee" type="text" value="${htmlEscape(item.entryFee)}" placeholder="Free" /></div>
+        <div><label>Team size</label><input data-list="hackathons" data-index="${index}" data-field="teamSize" type="text" value="${htmlEscape(item.teamSize)}" placeholder="2–4 members" /></div>
+        <div><label>Location</label><input data-list="hackathons" data-index="${index}" data-field="location" type="text" value="${htmlEscape(item.location)}" placeholder="Online" /></div>
+        <div class="admin-col-span-2"><label>Theme</label><input data-list="hackathons" data-index="${index}" data-field="theme" type="text" value="${htmlEscape(item.theme)}" placeholder="AI for social good" /></div>
         <div><label>Registration URL</label><input data-list="hackathons" data-index="${index}" data-field="registrationUrl" type="text" value="${htmlEscape(item.registrationUrl)}" /></div>
         <div><label>Community URL</label><input data-list="hackathons" data-index="${index}" data-field="communityUrl" type="text" value="${htmlEscape(item.communityUrl)}" /></div>
       </div>
-      ${toolbarTemplate("hackathons", index, "Remove Hackathon")}
+      ${toolbarTemplate("hackathons", index, "Remove")}
     </div>
   `);
 
   renderList("projectsList", content.projects, (item, index) => `
-    <div class="admin-list-item">
-      <h4>Project ${index + 1}</h4>
+    <div class="admin-list-item" id="project-item-${index}">
+      <h4>${htmlEscape(item.name || `Project ${index + 1}`)}</h4>
       <div class="admin-grid">
-        <div><label>Name</label><input data-list="projects" data-index="${index}" data-field="name" type="text" value="${htmlEscape(item.name)}" /></div>
-        <div><label>Hackathon ID</label><input data-list="projects" data-index="${index}" data-field="hackathonId" type="text" value="${htmlEscape(item.hackathonId)}" /></div>
-        <div><label>Team</label><input data-list="projects" data-index="${index}" data-field="team" type="text" value="${htmlEscape(item.team)}" /></div>
-        <div><label>Award</label><input data-list="projects" data-index="${index}" data-field="award" type="text" value="${htmlEscape(item.award)}" /></div>
-        <div><label>Publish Status</label><select data-list="projects" data-index="${index}" data-field="publishStatus"><option value="draft" ${item.publishStatus === "draft" ? "selected" : ""}>Draft</option><option value="published" ${item.publishStatus !== "draft" ? "selected" : ""}>Published</option><option value="archived" ${item.publishStatus === "archived" ? "selected" : ""}>Archived</option></select></div>
-        <div><label>Visible</label><select data-list="projects" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
+        <div><label>Project name</label><input data-list="projects" data-index="${index}" data-field="name" type="text" value="${htmlEscape(item.name)}" placeholder="EcoTrack" /></div>
+        <div><label>Team name</label><input data-list="projects" data-index="${index}" data-field="team" type="text" value="${htmlEscape(item.team)}" placeholder="Team Alpha" /></div>
+        <div><label>Hackathon ID</label><input data-list="projects" data-index="${index}" data-field="hackathonId" type="text" value="${htmlEscape(item.hackathonId)}" placeholder="hv-001" /></div>
+        <div><label>Award</label><input data-list="projects" data-index="${index}" data-field="award" type="text" value="${htmlEscape(item.award)}" placeholder="1st Place" /></div>
+        <div><label>Published</label><select data-list="projects" data-index="${index}" data-field="publishStatus"><option value="draft" ${item.publishStatus === "draft" ? "selected" : ""}>Draft</option><option value="published" ${item.publishStatus === "published" ? "selected" : ""}>Published</option><option value="archived" ${item.publishStatus === "archived" ? "selected" : ""}>Archived</option></select></div>
+        <div><label>Visible on site</label><select data-list="projects" data-index="${index}" data-field="isActive"><option value="true" ${item.isActive !== false ? "selected" : ""}>Yes</option><option value="false" ${item.isActive === false ? "selected" : ""}>No</option></select></div>
+        <div class="admin-col-span-2"><label>Description</label><textarea data-list="projects" data-index="${index}" data-field="description" rows="3">${htmlEscape(item.description)}</textarea></div>
         <div><label>GitHub URL</label><input data-list="projects" data-index="${index}" data-field="githubUrl" type="text" value="${htmlEscape(item.githubUrl)}" /></div>
         <div><label>Demo URL</label><input data-list="projects" data-index="${index}" data-field="demoUrl" type="text" value="${htmlEscape(item.demoUrl)}" /></div>
-        <div class="admin-col-span-2"><label>Description</label><input data-list="projects" data-index="${index}" data-field="description" type="text" value="${htmlEscape(item.description)}" /></div>
         <div><label>Members (comma separated)</label><input data-list="projects" data-index="${index}" data-field="members" type="text" value="${htmlEscape((item.members || []).join(", "))}" /></div>
-        <div><label>Tech Stack (comma separated)</label><input data-list="projects" data-index="${index}" data-field="techStack" type="text" value="${htmlEscape((item.techStack || []).join(", "))}" /></div>
+        <div><label>Tech stack (comma separated)</label><input data-list="projects" data-index="${index}" data-field="techStack" type="text" value="${htmlEscape((item.techStack || []).join(", "))}" /></div>
       </div>
-      ${toolbarTemplate("projects", index, "Remove Project")}
+      ${toolbarTemplate("projects", index, "Remove")}
     </div>
   `);
+
+  updateListEmptyStates(content);
 }
 
 function ensureEventDetails(content, slug) {
@@ -401,38 +288,12 @@ function renderEventDetails(content) {
   `);
 }
 
-function currentSeoHackathonSlug() {
-  if (seoHackathonUseCurrent?.value === "true") return currentSlug();
-  return getInputValue("seoHackathonSlug");
-}
-
-function renderSeoFields(content) {
-  setValue("seoTitleSuffix", content.seo.global.titleSuffix || "");
-  setValue("seoDefaultDescription", content.seo.global.defaultDescription || "");
-  setValue("seoDefaultOgImage", content.seo.global.defaultOgImage || "");
-
-  const pageKey = getInputValue("seoPageKey") || "home";
-  const pageSeo = content.seo.pages[pageKey] || {};
-  setValue("seoPageTitle", pageSeo.title || "");
-  setValue("seoPageDescription", pageSeo.description || "");
-  setValue("seoPageOgImage", pageSeo.ogImage || "");
-
-  const hackSlug = currentSeoHackathonSlug();
-  if (seoHackathonUseCurrent?.value === "true") setValue("seoHackathonSlug", hackSlug || "");
-  const hackSeo = content.seo.hackathonPages[hackSlug] || {};
-  setValue("seoHackathonTitle", hackSeo.title || "");
-  setValue("seoHackathonDescription", hackSeo.description || "");
-  setValue("seoHackathonOgImage", hackSeo.ogImage || "");
-}
-
 function renderFromState() {
   if (!contentState) return;
-  renderSimpleFields(contentState);
   renderRepeaters(contentState);
   renderEventSlugOptions(contentState);
   renderEventDetails(contentState);
-  renderSeoFields(contentState);
-  contentInput.value = JSON.stringify(contentState, null, 2);
+  updateDashboard(contentState);
 }
 
 function collectListValues(listName) {
@@ -456,98 +317,8 @@ function collectEventPeople(listName) {
   }));
 }
 
-function collectSeoFromFields(base) {
-  base.seo.global = {
-    titleSuffix: getInputValue("seoTitleSuffix"),
-    defaultDescription: getInputValue("seoDefaultDescription"),
-    defaultOgImage: getInputValue("seoDefaultOgImage"),
-  };
-  const pageKey = getInputValue("seoPageKey") || "home";
-  base.seo.pages[pageKey] = {
-    title: getInputValue("seoPageTitle"),
-    description: getInputValue("seoPageDescription"),
-    ogImage: getInputValue("seoPageOgImage"),
-  };
-  const hackSlug = currentSeoHackathonSlug();
-  if (hackSlug) {
-    base.seo.hackathonPages[hackSlug] = {
-      title: getInputValue("seoHackathonTitle"),
-      description: getInputValue("seoHackathonDescription"),
-      ogImage: getInputValue("seoHackathonOgImage"),
-    };
-  }
-}
-
 function collectContentFromForm() {
-  const base = ensureContentDefaults(contentState || {});
-  base.globalSettings.siteName = getInputValue("siteName");
-  base.globalSettings.tagline = getInputValue("siteTagline");
-  base.globalSettings.shortDescription = getInputValue("siteShortDescription");
-  base.globalSettings.contactEmail = getInputValue("contactEmail");
-  base.globalSettings.footerText = getInputValue("footerText");
-  base.globalSettings.logoUrl = getInputValue("logoUrl");
-  base.globalSettings.faviconUrl = getInputValue("faviconUrl");
-  base.globalSettings.socialPreviewImage = getInputValue("socialPreviewImage");
-  base.globalSettings.announcement = {
-    enabled: getInputValue("announcementEnabled") !== "false",
-    text: getInputValue("announcementText"),
-    linkUrl: getInputValue("announcementLinkUrl"),
-    linkText: getInputValue("announcementLinkText"),
-    startAtIso: getInputValue("announcementStartAt"),
-    endAtIso: getInputValue("announcementEndAt"),
-  };
-
-  base.siteConfig.registerUrl = getInputValue("registerUrl");
-  base.siteConfig.communityUrl = getInputValue("communityUrl");
-  base.siteConfig.ga4MeasurementId = getInputValue("ga4MeasurementId");
-  base.siteConfig.socialLinks = collectListValues("social").map((entry) => ({
-    label: (entry.label || "").trim(),
-    url: (entry.url || "").trim(),
-    isActive: entry.isActive !== "false",
-  }));
-
-  base.navigation.items = collectListValues("nav").map((entry) => ({
-    label: (entry.label || "").trim(),
-    href: (entry.href || "").trim(),
-    visible: entry.visible !== "false",
-  }));
-  base.mediaLibrary = collectListValues("media").map((entry) => ({
-    key: (entry.key || "").trim(),
-    label: (entry.label || "").trim(),
-    url: (entry.url || "").trim(),
-    alt: (entry.alt || "").trim(),
-    type: (entry.type || "image").trim(),
-    tags: splitLines(String(entry.tags || "").replaceAll(",", "\n")),
-    isActive: entry.isActive !== "false",
-  }));
-
-  base.home.kicker = getInputValue("homeKicker");
-  base.home.title = getInputValue("homeTitle");
-  base.home.lead = getInputValue("homeLead");
-  base.home.countdownLabel = getInputValue("homeCountdownLabel");
-  base.home.primaryCtaText = getInputValue("homePrimaryCtaText");
-  base.home.primaryCtaUrl = getInputValue("homePrimaryCtaUrl");
-  base.home.secondaryCtaText = getInputValue("homeSecondaryCtaText");
-  base.home.secondaryCtaUrl = getInputValue("homeSecondaryCtaUrl");
-  base.home.valueCards = collectListValues("homeCards").map((entry) => ({
-    title: (entry.title || "").trim(),
-    description: (entry.description || "").trim(),
-    isActive: entry.isActive !== "false",
-  }));
-  base.home.sections = collectListValues("homeSections").map((entry) => ({
-    key: (entry.key || "").trim(),
-    label: (entry.label || "").trim(),
-    enabled: entry.enabled !== "false",
-  }));
-
-  base.about.kicker = getInputValue("aboutKicker");
-  base.about.title = getInputValue("aboutTitle");
-  base.about.lead = getInputValue("aboutLead");
-  base.about.cards = collectListValues("aboutCards").map((entry) => ({
-    title: (entry.title || "").trim(),
-    description: (entry.description || "").trim(),
-    isActive: entry.isActive !== "false",
-  }));
+  const base = ensureContentDefaults(structuredClone(contentState || {}));
 
   base.hackathons = collectListValues("hackathons").map((entry) => ({
     id: (entry.id || "").trim(),
@@ -599,7 +370,6 @@ function collectContentFromForm() {
     })),
   };
 
-  collectSeoFromFields(base);
   return ensureContentDefaults(base);
 }
 
@@ -614,21 +384,6 @@ function moveItemInArray(items, fromIndex, direction) {
 
 function addListItem(listName) {
   contentState = collectContentFromForm();
-  if (listName === "social") contentState.siteConfig.socialLinks.push({ label: "", url: "", isActive: true });
-  if (listName === "media")
-    contentState.mediaLibrary.push({
-      key: "",
-      label: "",
-      url: "",
-      alt: "",
-      type: "image",
-      tags: [],
-      isActive: true,
-    });
-  if (listName === "nav") contentState.navigation.items.push({ label: "", href: "/", visible: true });
-  if (listName === "homeCards") contentState.home.valueCards.push({ title: "", description: "", isActive: true });
-  if (listName === "homeSections") contentState.home.sections.push({ key: "section", label: "Section", enabled: true });
-  if (listName === "aboutCards") contentState.about.cards.push({ title: "", description: "", isActive: true });
   if (listName === "hackathons") {
     contentState.hackathons.push({
       id: "",
@@ -681,12 +436,6 @@ function addListItem(listName) {
 function removeListItem(listName, index) {
   contentState = collectContentFromForm();
   const idx = Number(index);
-  if (listName === "social") contentState.siteConfig.socialLinks.splice(idx, 1);
-  if (listName === "media") contentState.mediaLibrary.splice(idx, 1);
-  if (listName === "nav") contentState.navigation.items.splice(idx, 1);
-  if (listName === "homeCards") contentState.home.valueCards.splice(idx, 1);
-  if (listName === "homeSections") contentState.home.sections.splice(idx, 1);
-  if (listName === "aboutCards") contentState.about.cards.splice(idx, 1);
   if (listName === "hackathons") contentState.hackathons.splice(idx, 1);
   if (listName === "projects") contentState.projects.splice(idx, 1);
   if (listName === "judges" || listName === "mentors" || listName === "faq") {
@@ -701,12 +450,6 @@ function moveListItem(listName, index, direction) {
   contentState = collectContentFromForm();
   const idx = Number(index);
   if (Number.isNaN(idx)) return;
-  if (listName === "social") contentState.siteConfig.socialLinks = moveItemInArray(contentState.siteConfig.socialLinks, idx, direction);
-  if (listName === "media") contentState.mediaLibrary = moveItemInArray(contentState.mediaLibrary, idx, direction);
-  if (listName === "nav") contentState.navigation.items = moveItemInArray(contentState.navigation.items, idx, direction);
-  if (listName === "homeCards") contentState.home.valueCards = moveItemInArray(contentState.home.valueCards, idx, direction);
-  if (listName === "homeSections") contentState.home.sections = moveItemInArray(contentState.home.sections, idx, direction);
-  if (listName === "aboutCards") contentState.about.cards = moveItemInArray(contentState.about.cards, idx, direction);
   if (listName === "hackathons") contentState.hackathons = moveItemInArray(contentState.hackathons, idx, direction);
   if (listName === "projects") contentState.projects = moveItemInArray(contentState.projects, idx, direction);
   if (listName === "judges" || listName === "mentors" || listName === "faq") {
@@ -750,39 +493,6 @@ async function handleLoad() {
   }
 }
 
-async function handleReset() {
-  setStatus("Loading fallback content...");
-  try {
-    const content = await loadFromFallbackFile();
-    contentState = ensureContentDefaults(content);
-    renderFromState();
-    setStatus("Fallback JSON loaded. Save to publish.", "is-success");
-  } catch (error) {
-    setStatus(error.message, "is-error");
-  }
-}
-
-function refreshJsonFromForms() {
-  try {
-    contentState = collectContentFromForm();
-    contentInput.value = JSON.stringify(contentState, null, 2);
-    setStatus("JSON refreshed from form values.", "is-success");
-  } catch (error) {
-    setStatus(`Unable to refresh JSON: ${error.message}`, "is-error");
-  }
-}
-
-function applyJsonToForms() {
-  try {
-    const parsed = JSON.parse(contentInput.value);
-    contentState = ensureContentDefaults(parsed);
-    renderFromState();
-    setStatus("JSON applied to form controls.", "is-success");
-  } catch {
-    setStatus("Invalid JSON. Fix it before applying.", "is-error");
-  }
-}
-
 async function postAdminSection(url, payload, successMessage) {
   storeToken();
   const response = await fetch(url, {
@@ -798,49 +508,8 @@ async function postAdminSection(url, payload, successMessage) {
   setStatus(`${successMessage} (${result.updatedAt || "updated"})`, "is-success");
 }
 
-async function handleSave() {
-  setStatus("Saving content...");
-  storeToken();
-  try {
-    contentState = collectContentFromForm();
-    const response = await fetch("/api/admin/content", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-admin-token": tokenValue(),
-      },
-      body: JSON.stringify(contentState),
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Failed to save content.");
-    contentInput.value = JSON.stringify(contentState, null, 2);
-    setStatus(`Saved successfully at ${payload.updatedAt}.`, "is-success");
-  } catch (error) {
-    setStatus(error.message, "is-error");
-  }
-}
-
-async function saveSettingsSection() {
-  setStatus("Saving settings section...");
-  try {
-    contentState = collectContentFromForm();
-    await postAdminSection(
-      "/api/admin/settings",
-      {
-        globalSettings: contentState.globalSettings,
-        siteConfig: contentState.siteConfig,
-        navigation: contentState.navigation,
-        seo: contentState.seo,
-      },
-      "Settings section saved"
-    );
-  } catch (error) {
-    setStatus(error.message, "is-error");
-  }
-}
-
 async function saveHackathonsSection() {
-  setStatus("Saving hackathons section...");
+  setStatus("Saving hackathons...");
   try {
     contentState = collectContentFromForm();
     await postAdminSection(
@@ -850,7 +519,7 @@ async function saveHackathonsSection() {
         eventDetails: contentState.eventDetails,
         seo: contentState.seo,
       },
-      "Hackathons section saved"
+      "Hackathons saved"
     );
   } catch (error) {
     setStatus(error.message, "is-error");
@@ -858,71 +527,186 @@ async function saveHackathonsSection() {
 }
 
 async function saveProjectsSection() {
-  setStatus("Saving projects section...");
+  setStatus("Saving projects...");
   try {
     contentState = collectContentFromForm();
     await postAdminSection(
       "/api/admin/projects",
       { projects: contentState.projects },
-      "Projects section saved"
+      "Projects saved"
     );
   } catch (error) {
     setStatus(error.message, "is-error");
   }
 }
 
-async function saveMediaSection() {
-  setStatus("Saving media section...");
-  try {
-    contentState = collectContentFromForm();
-    await postAdminSection(
-      "/api/admin/media",
-      {
-        mediaLibrary: contentState.mediaLibrary,
-        globalMedia: {
-          logoUrl: contentState.globalSettings.logoUrl,
-          faviconUrl: contentState.globalSettings.faviconUrl,
-          socialPreviewImage: contentState.globalSettings.socialPreviewImage,
-        },
-      },
-      "Media section saved"
-    );
-  } catch (error) {
-    setStatus(error.message, "is-error");
+function updateListEmptyStates(content = contentState) {
+  const hackathons = Array.isArray(content?.hackathons) ? content.hackathons : [];
+  const projects = Array.isArray(content?.projects) ? content.projects : [];
+
+  const hackathonsEmpty = byId("hackathonsEmpty");
+  const projectsEmpty = byId("projectsEmpty");
+  const hackathonsList = byId("hackathonsList");
+  const projectsList = byId("projectsList");
+
+  if (hackathonsEmpty) hackathonsEmpty.hidden = hackathons.length > 0;
+  if (projectsEmpty) projectsEmpty.hidden = projects.length > 0;
+  if (hackathonsList) hackathonsList.hidden = hackathons.length === 0;
+  if (projectsList) projectsList.hidden = projects.length === 0;
+}
+
+function publishStatusLabel(status) {
+  if (status === "published") return "Published";
+  if (status === "archived") return "Archived";
+  return "Draft";
+}
+
+function renderDashboardTables(content = contentState) {
+  const hackathons = Array.isArray(content?.hackathons) ? content.hackathons : [];
+  const projects = Array.isArray(content?.projects) ? content.projects : [];
+
+  const hackathonsBody = byId("dashboardHackathonsTable")?.querySelector("tbody");
+  const projectsBody = byId("dashboardProjectsTable")?.querySelector("tbody");
+  const hackathonsEmpty = byId("dashboardHackathonsEmpty");
+  const projectsEmpty = byId("dashboardProjectsEmpty");
+  const hackathonsTable = byId("dashboardHackathonsTable");
+
+  if (hackathonsBody) {
+    hackathonsBody.innerHTML = hackathons
+      .map(
+        (item, index) => `
+        <tr>
+          <td><strong>${htmlEscape(item.name || item.shortName || "Untitled")}</strong></td>
+          <td>${htmlEscape(item.dateDisplay || "—")}</td>
+          <td>${htmlEscape(item.status || "—")}</td>
+          <td><span class="admin-badge admin-badge--${htmlEscape(item.publishStatus || "draft")}">${publishStatusLabel(item.publishStatus)}</span></td>
+          <td><button class="btn btn-secondary btn-sm" type="button" data-admin-edit="hackathon" data-index="${index}">Edit</button></td>
+        </tr>`
+      )
+      .join("");
+  }
+
+  if (projectsBody) {
+    projectsBody.innerHTML = projects
+      .map(
+        (item, index) => `
+        <tr>
+          <td><strong>${htmlEscape(item.name || "Untitled")}</strong></td>
+          <td>${htmlEscape(item.team || "—")}</td>
+          <td>${htmlEscape(item.hackathonId || "—")}</td>
+          <td><span class="admin-badge admin-badge--${htmlEscape(item.publishStatus || "draft")}">${publishStatusLabel(item.publishStatus)}</span></td>
+          <td><button class="btn btn-secondary btn-sm" type="button" data-admin-edit="project" data-index="${index}">Edit</button></td>
+        </tr>`
+      )
+      .join("");
+  }
+
+  if (hackathonsEmpty) hackathonsEmpty.hidden = hackathons.length > 0;
+  if (projectsEmpty) projectsEmpty.hidden = projects.length > 0;
+  if (hackathonsTable) {
+    hackathonsTable.hidden = hackathons.length === 0;
+    const wrap = hackathonsTable.closest(".table-wrap");
+    if (wrap) wrap.hidden = hackathons.length === 0;
+  }
+  const projectsTable = byId("dashboardProjectsTable");
+  if (projectsTable) {
+    projectsTable.hidden = projects.length === 0;
+    const wrap = projectsTable.closest(".table-wrap");
+    if (wrap) wrap.hidden = projects.length === 0;
   }
 }
 
-async function saveSeoSection() {
-  setStatus("Saving SEO section...");
-  try {
-    contentState = collectContentFromForm();
-    await postAdminSection(
-      "/api/admin/settings",
-      {
-        globalSettings: contentState.globalSettings,
-        siteConfig: contentState.siteConfig,
-        navigation: contentState.navigation,
-        seo: contentState.seo,
-      },
-      "SEO section saved"
-    );
-  } catch (error) {
-    setStatus(error.message, "is-error");
-  }
+function updateDashboard(content = contentState) {
+  const hackathons = Array.isArray(content?.hackathons) ? content.hackathons : [];
+  const projects = Array.isArray(content?.projects) ? content.projects : [];
+
+  const statHackathons = byId("statHackathons");
+  const statProjects = byId("statProjects");
+  if (statHackathons) statHackathons.textContent = String(hackathons.length);
+  if (statProjects) statProjects.textContent = String(projects.length);
+
+  renderDashboardTables(content);
+}
+
+function showAdminPanel(panelId) {
+  document.querySelectorAll("[data-admin-panel]").forEach((panel) => {
+    panel.classList.toggle("is-active", panel.getAttribute("data-admin-panel") === panelId);
+  });
+  document.querySelectorAll("[data-admin-nav]").forEach((link) => {
+    link.classList.toggle("is-active", link.getAttribute("data-admin-nav") === panelId);
+  });
+}
+
+function focusListItem(type, index) {
+  const elementId = type === "hackathon" ? `hackathon-item-${index}` : `project-item-${index}`;
+  const element = byId(elementId);
+  if (!element) return;
+  element.scrollIntoView({ behavior: "smooth", block: "start" });
+  element.classList.add("is-highlight");
+  window.setTimeout(() => element.classList.remove("is-highlight"), 1600);
+}
+
+function addHackathon() {
+  showAdminPanel("hackathons");
+  addListItem("hackathons");
+  const index = (contentState?.hackathons?.length || 1) - 1;
+  focusListItem("hackathon", index);
+  setStatus("New hackathon added. Fill in the details and click Save Hackathons.", "is-success");
+}
+
+function addProject() {
+  showAdminPanel("projects");
+  addListItem("projects");
+  const index = (contentState?.projects?.length || 1) - 1;
+  focusListItem("project", index);
+  setStatus("New project added. Fill in the details and click Save Projects.", "is-success");
+}
+
+function initAdminNavigation() {
+  document.addEventListener("click", (event) => {
+    const actionButton = event.target.closest("[data-admin-action]");
+    if (actionButton) {
+      const action = actionButton.getAttribute("data-admin-action");
+      if (action === "add-hackathon") {
+        addHackathon();
+        return;
+      }
+      if (action === "add-project") {
+        addProject();
+        return;
+      }
+    }
+
+    const editButton = event.target.closest("[data-admin-edit]");
+    if (editButton) {
+      const type = editButton.getAttribute("data-admin-edit");
+      const index = Number(editButton.getAttribute("data-index"));
+      if (type === "hackathon") {
+        showAdminPanel("hackathons");
+        focusListItem("hackathon", index);
+        return;
+      }
+      if (type === "project") {
+        showAdminPanel("projects");
+        focusListItem("project", index);
+      }
+      return;
+    }
+
+    const navButton = event.target.closest("[data-admin-nav]");
+    if (!navButton) return;
+    const panelId = navButton.getAttribute("data-admin-nav");
+    if (!panelId) return;
+    showAdminPanel(panelId);
+  });
 }
 
 function bindButtons() {
-  byId("addSocialLinkBtn")?.addEventListener("click", () => addListItem("social"));
-  byId("addMediaAssetBtn")?.addEventListener("click", () => addListItem("media"));
-  byId("addNavItemBtn")?.addEventListener("click", () => addListItem("nav"));
-  byId("addHomeCardBtn")?.addEventListener("click", () => addListItem("homeCards"));
-  byId("addHomeSectionBtn")?.addEventListener("click", () => addListItem("homeSections"));
-  byId("addAboutCardBtn")?.addEventListener("click", () => addListItem("aboutCards"));
-  byId("addHackathonBtn")?.addEventListener("click", () => addListItem("hackathons"));
-  byId("addProjectBtn")?.addEventListener("click", () => addListItem("projects"));
   byId("addJudgeBtn")?.addEventListener("click", () => addListItem("judges"));
   byId("addMentorBtn")?.addEventListener("click", () => addListItem("mentors"));
   byId("addFaqBtn")?.addEventListener("click", () => addListItem("faq"));
+  byId("addHackathonBtn")?.addEventListener("click", () => addHackathon());
+  byId("addProjectBtn")?.addEventListener("click", () => addProject());
 
   document.addEventListener("click", (event) => {
     const removeBtn = event.target.closest("[data-remove-list]");
@@ -943,19 +727,6 @@ function bindButtons() {
   eventDetailsSlugSelect?.addEventListener("change", () => {
     contentState = collectContentFromForm();
     renderEventDetails(contentState);
-    renderSeoFields(contentState);
-  });
-  seoPageKeySelect?.addEventListener("change", () => {
-    contentState = collectContentFromForm();
-    renderSeoFields(contentState);
-  });
-  seoHackathonUseCurrent?.addEventListener("change", () => {
-    contentState = collectContentFromForm();
-    renderSeoFields(contentState);
-  });
-  byId("seoHackathonSlug")?.addEventListener("change", () => {
-    contentState = collectContentFromForm();
-    renderSeoFields(contentState);
   });
 }
 
@@ -964,15 +735,9 @@ function init() {
   if (tokenInput && remembered) tokenInput.value = remembered;
 
   loadBtn?.addEventListener("click", handleLoad);
-  saveBtn?.addEventListener("click", handleSave);
-  resetBtn?.addEventListener("click", handleReset);
-  refreshJsonBtn?.addEventListener("click", refreshJsonFromForms);
-  applyJsonBtn?.addEventListener("click", applyJsonToForms);
-  saveSettingsSectionBtn?.addEventListener("click", saveSettingsSection);
   saveHackathonsSectionBtn?.addEventListener("click", saveHackathonsSection);
   saveProjectsSectionBtn?.addEventListener("click", saveProjectsSection);
-  saveSeoSectionBtn?.addEventListener("click", saveSeoSection);
-  saveMediaSectionBtn?.addEventListener("click", saveMediaSection);
+  initAdminNavigation();
   bindButtons();
   handleLoad();
 }

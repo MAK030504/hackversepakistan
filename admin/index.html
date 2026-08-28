@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
     <title>Admin | HackVerse Pakistan</title>
     <meta name="description" content="Admin panel for managing HackVerse Pakistan website content." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -14,111 +15,130 @@
       rel="stylesheet"
     />
   </head>
-  <body>
-    <div class="site">
-      <div data-site-header></div>
-      <main class="site-main">
-        <section class="section section-tight">
-          <div class="container">
-            <p class="kicker">Admin Panel</p>
-            <h1>Edit website content</h1>
-            <p class="lead">
-              Update all site content as JSON. This panel writes to Cloudflare D1 and powers live
-              pages through the content API.
-            </p>
-            <div class="card">
-              <label for="adminToken"><strong>Admin token</strong></label>
-              <input id="adminToken" type="password" placeholder="Enter ADMIN_TOKEN" />
+  <body class="admin-body">
+    <div class="admin-shell">
+      <aside class="admin-sidebar" aria-label="Admin navigation">
+        <div class="admin-sidebar-brand">
+          <span class="brand-pill">HV</span>
+          <div>
+            <strong>HackVerse</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+        <nav class="admin-nav">
+          <button class="admin-nav-link is-active" type="button" data-admin-nav="dashboard">Dashboard</button>
+          <button class="admin-nav-link" type="button" data-admin-nav="hackathons">Hackathons</button>
+          <button class="admin-nav-link" type="button" data-admin-nav="projects">Projects</button>
+        </nav>
+        <a class="admin-sidebar-footer" href="/" target="_blank" rel="noopener noreferrer">View live site</a>
+      </aside>
+
+      <div class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <h1 class="admin-topbar-title">Admin Panel</h1>
+            <p class="admin-topbar-subtitle">Manage hackathons and projects</p>
+          </div>
+          <div class="admin-topbar-actions">
+            <label class="admin-token-field" for="adminToken">
+              <span>Token</span>
+              <input id="adminToken" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
+            </label>
+            <button id="loadContentBtn" class="btn btn-secondary" type="button">Reload</button>
+          </div>
+        </header>
+
+        <div class="admin-content">
+          <p id="adminStatus" class="admin-status notify-message" role="status" aria-live="polite"></p>
+
+          <section class="admin-panel is-active" data-admin-panel="dashboard">
+            <div class="admin-action-cards">
+              <article class="admin-action-card">
+                <h2>Hackathons</h2>
+                <p>Create and publish hackathon events for the site.</p>
+                <div class="admin-action-card-footer">
+                  <span class="admin-action-count"><strong id="statHackathons">0</strong> total</span>
+                  <button class="btn btn-primary" type="button" data-admin-action="add-hackathon">+ Add Hackathon</button>
+                </div>
+              </article>
+              <article class="admin-action-card">
+                <h2>Projects</h2>
+                <p>Add winning or featured projects to the showcase.</p>
+                <div class="admin-action-card-footer">
+                  <span class="admin-action-count"><strong id="statProjects">0</strong> total</span>
+                  <button class="btn btn-primary" type="button" data-admin-action="add-project">+ Add Project</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="card admin-card">
+              <div class="admin-panel-header">
+                <h2>Your Hackathons</h2>
+                <button class="btn btn-secondary" type="button" data-admin-nav="hackathons">Manage all</button>
+              </div>
+              <div class="table-wrap">
+                <table class="admin-table" id="dashboardHackathonsTable">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Published</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <p class="admin-empty" id="dashboardHackathonsEmpty" hidden>No hackathons yet. Click “Add Hackathon” above to create your first one.</p>
+            </div>
+
+            <div class="card admin-card">
+              <div class="admin-panel-header">
+                <h2>Your Projects</h2>
+                <button class="btn btn-secondary" type="button" data-admin-nav="projects">Manage all</button>
+              </div>
+              <div class="table-wrap">
+                <table class="admin-table" id="dashboardProjectsTable">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Team</th>
+                      <th>Hackathon</th>
+                      <th>Published</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <p class="admin-empty" id="dashboardProjectsEmpty" hidden>No projects yet. Click “Add Project” above to add one.</p>
+            </div>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="hackathons">
+            <div class="admin-panel-header admin-panel-header--page">
+              <div>
+                <h2>Hackathons</h2>
+                <p class="lead">Add hackathon events with dates, prizes, and registration links.</p>
+              </div>
               <div class="cta-row">
-                <button id="loadContentBtn" class="btn btn-secondary" type="button">Load from DB</button>
-                <button id="resetFallbackBtn" class="btn btn-secondary" type="button">Load fallback JSON</button>
-                <button id="saveContentBtn" class="btn btn-primary" type="button">Save to DB</button>
-              </div>
-              <p id="adminStatus" class="notify-message" role="status" aria-live="polite"></p>
-            </div>
-
-            <div class="card admin-card">
-              <h2>Global Settings</h2>
-              <div class="admin-grid">
-                <div><label for="siteName">Website Name</label><input id="siteName" type="text" /></div>
-                <div><label for="siteTagline">Tagline</label><input id="siteTagline" type="text" /></div>
-                <div><label for="siteShortDescription">Short Description</label><input id="siteShortDescription" type="text" /></div>
-                <div><label for="contactEmail">Contact Email</label><input id="contactEmail" type="text" /></div>
-                <div><label for="registerUrl">Default Registration URL</label><input id="registerUrl" type="text" /></div>
-                <div><label for="communityUrl">Community Invite URL</label><input id="communityUrl" type="text" /></div>
-                <div><label for="ga4MeasurementId">GA4 Measurement ID</label><input id="ga4MeasurementId" type="text" /></div>
-                <div><label for="footerText">Footer Text</label><input id="footerText" type="text" /></div>
-                <div><label for="logoUrl">Logo URL</label><input id="logoUrl" type="text" /></div>
-                <div><label for="faviconUrl">Favicon URL</label><input id="faviconUrl" type="text" /></div>
-                <div class="admin-col-span-2"><label for="socialPreviewImage">Social Preview Image URL</label><input id="socialPreviewImage" type="text" /></div>
-              </div>
-              <h3>Social Links</h3>
-              <div id="socialLinksList" class="admin-list"></div>
-              <h3>Announcement Banner</h3>
-              <div class="admin-grid">
-                <div><label for="announcementEnabled">Enabled</label><select id="announcementEnabled"><option value="true">Yes</option><option value="false">No</option></select></div>
-                <div><label for="announcementLinkText">Link Text</label><input id="announcementLinkText" type="text" /></div>
-                <div class="admin-col-span-2"><label for="announcementText">Banner Text</label><input id="announcementText" type="text" /></div>
-                <div class="admin-col-span-2"><label for="announcementLinkUrl">Banner Link URL</label><input id="announcementLinkUrl" type="text" /></div>
-                <div><label for="announcementStartAt">Start At (ISO)</label><input id="announcementStartAt" type="text" /></div>
-                <div><label for="announcementEndAt">End At (ISO)</label><input id="announcementEndAt" type="text" /></div>
-              </div>
-              <div class="cta-row">
-                <button id="addSocialLinkBtn" class="btn btn-secondary" type="button">Add Social Link</button>
-                <button id="saveSettingsSectionBtn" class="btn btn-primary" type="button">Save Settings Section</button>
+                <button id="addHackathonBtn" class="btn btn-primary" type="button">+ Add Hackathon</button>
+                <button id="saveHackathonsSectionBtn" class="btn btn-primary" type="button">Save Hackathons</button>
               </div>
             </div>
 
             <div class="card admin-card">
-              <h2>Navigation</h2>
-              <div id="navigationList" class="admin-list"></div>
-              <button id="addNavItemBtn" class="btn btn-secondary" type="button">Add Navigation Item</button>
-            </div>
-
-            <div class="card admin-card">
-              <h2>Media Library</h2>
-              <p class="lead">Store reusable media URLs for logos, banners, and social assets.</p>
-              <div id="mediaLibraryList" class="admin-list"></div>
-              <div class="cta-row">
-                <button id="addMediaAssetBtn" class="btn btn-secondary" type="button">Add Media Asset</button>
-                <button id="saveMediaSectionBtn" class="btn btn-primary" type="button">Save Media Section</button>
-              </div>
-            </div>
-
-            <div class="card admin-card">
-              <h2>Homepage</h2>
-              <div class="admin-grid">
-                <div><label for="homeKicker">Kicker</label><input id="homeKicker" type="text" /></div>
-                <div><label for="homeCountdownLabel">Countdown Label</label><input id="homeCountdownLabel" type="text" /></div>
-                <div class="admin-col-span-2"><label for="homeTitle">Title</label><input id="homeTitle" type="text" /></div>
-                <div class="admin-col-span-2"><label for="homeLead">Lead</label><textarea id="homeLead"></textarea></div>
-                <div><label for="homePrimaryCtaText">Primary CTA Text</label><input id="homePrimaryCtaText" type="text" /></div>
-                <div><label for="homePrimaryCtaUrl">Primary CTA URL</label><input id="homePrimaryCtaUrl" type="text" /></div>
-                <div><label for="homeSecondaryCtaText">Secondary CTA Text</label><input id="homeSecondaryCtaText" type="text" /></div>
-                <div><label for="homeSecondaryCtaUrl">Secondary CTA URL</label><input id="homeSecondaryCtaUrl" type="text" /></div>
-              </div>
-              <h3>Value Cards</h3>
-              <div id="homeCardsList" class="admin-list"></div>
-              <button id="addHomeCardBtn" class="btn btn-secondary" type="button">Add Value Card</button>
-              <h3>Home Section Order and Visibility</h3>
-              <div id="homeSectionsList" class="admin-list"></div>
-              <button id="addHomeSectionBtn" class="btn btn-secondary" type="button">Add Home Section</button>
-            </div>
-
-            <div class="card admin-card">
-              <h2>Hackathons</h2>
+              <p class="admin-empty" id="hackathonsEmpty" hidden>No hackathons yet. Click “Add Hackathon” to get started.</p>
               <div id="hackathonsList" class="admin-list"></div>
-              <div class="cta-row">
-                <button id="addHackathonBtn" class="btn btn-secondary" type="button">Add Hackathon</button>
-                <button id="saveHackathonsSectionBtn" class="btn btn-primary" type="button">Save Hackathons Section</button>
-              </div>
             </div>
 
             <div class="card admin-card">
-              <h2>Hackathon Event Details</h2>
+              <h3>Event page details</h3>
+              <p class="lead">Rules, timeline, judges, and FAQ for each hackathon’s detail page.</p>
               <div class="admin-grid">
                 <div>
-                  <label for="eventDetailsSlug">Select Hackathon Slug</label>
+                  <label for="eventDetailsSlug">Hackathon</label>
                   <select id="eventDetailsSlug"></select>
                 </div>
               </div>
@@ -127,86 +147,40 @@
                 <div><label for="timelineText">Timeline (one line per item)</label><textarea id="timelineText"></textarea></div>
                 <div><label for="rulesText">Rules (one line per item)</label><textarea id="rulesText"></textarea></div>
                 <div><label for="eligibilityText">Eligibility (one line per item)</label><textarea id="eligibilityText"></textarea></div>
-                <div><label for="judgingText">Judging Criteria (one line per item)</label><textarea id="judgingText"></textarea></div>
+                <div><label for="judgingText">Judging criteria (one line per item)</label><textarea id="judgingText"></textarea></div>
               </div>
-              <h3>Judges</h3>
+              <h4>Judges</h4>
               <div id="judgesList" class="admin-list"></div>
               <button id="addJudgeBtn" class="btn btn-secondary" type="button">Add Judge</button>
-              <h3>Mentors</h3>
+              <h4>Mentors</h4>
               <div id="mentorsList" class="admin-list"></div>
               <button id="addMentorBtn" class="btn btn-secondary" type="button">Add Mentor</button>
-              <h3>FAQ</h3>
+              <h4>FAQ</h4>
               <div id="faqList" class="admin-list"></div>
               <button id="addFaqBtn" class="btn btn-secondary" type="button">Add FAQ</button>
             </div>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="projects">
+            <div class="admin-panel-header admin-panel-header--page">
+              <div>
+                <h2>Projects</h2>
+                <p class="lead">Showcase projects from hackathons on the projects page and homepage.</p>
+              </div>
+              <div class="cta-row">
+                <button id="addProjectBtn" class="btn btn-primary" type="button">+ Add Project</button>
+                <button id="saveProjectsSectionBtn" class="btn btn-primary" type="button">Save Projects</button>
+              </div>
+            </div>
 
             <div class="card admin-card">
-              <h2>Projects Showcase</h2>
+              <p class="admin-empty" id="projectsEmpty" hidden>No projects yet. Click “Add Project” to add your first showcase entry.</p>
               <div id="projectsList" class="admin-list"></div>
-              <div class="cta-row">
-                <button id="addProjectBtn" class="btn btn-secondary" type="button">Add Project</button>
-                <button id="saveProjectsSectionBtn" class="btn btn-primary" type="button">Save Projects Section</button>
-              </div>
             </div>
-
-            <div class="card admin-card">
-              <h2>About Page</h2>
-              <div class="admin-grid">
-                <div><label for="aboutKicker">Kicker</label><input id="aboutKicker" type="text" /></div>
-                <div class="admin-col-span-2"><label for="aboutTitle">Title</label><input id="aboutTitle" type="text" /></div>
-                <div class="admin-col-span-2"><label for="aboutLead">Lead</label><textarea id="aboutLead"></textarea></div>
-              </div>
-              <h3>About Cards</h3>
-              <div id="aboutCardsList" class="admin-list"></div>
-              <button id="addAboutCardBtn" class="btn btn-secondary" type="button">Add About Card</button>
-            </div>
-
-            <div class="card admin-card">
-              <h2>Advanced JSON</h2>
-              <p class="lead">Optional direct JSON editor (for advanced changes).</p>
-              <label for="contentJson"><strong>Site content JSON</strong></label>
-              <textarea id="contentJson" class="admin-textarea" spellcheck="false"></textarea>
-              <div class="cta-row">
-                <button id="refreshJsonBtn" class="btn btn-secondary" type="button">Refresh JSON from forms</button>
-                <button id="applyJsonBtn" class="btn btn-secondary" type="button">Apply JSON to forms</button>
-              </div>
-            </div>
-
-            <div class="card admin-card">
-              <h2>SEO</h2>
-              <h3>Global SEO Defaults</h3>
-              <div class="admin-grid">
-                <div><label for="seoTitleSuffix">Title Suffix</label><input id="seoTitleSuffix" type="text" /></div>
-                <div><label for="seoDefaultOgImage">Default OG Image</label><input id="seoDefaultOgImage" type="text" /></div>
-                <div class="admin-col-span-2"><label for="seoDefaultDescription">Default Description</label><textarea id="seoDefaultDescription"></textarea></div>
-              </div>
-              <h3>Page SEO</h3>
-              <div class="admin-grid">
-                <div><label for="seoPageKey">Page Key</label><select id="seoPageKey"><option value="home">home</option><option value="hackathons">hackathons</option><option value="about">about</option><option value="projects">projects</option></select></div>
-              </div>
-              <div class="admin-grid">
-                <div class="admin-col-span-2"><label for="seoPageTitle">Page Title</label><input id="seoPageTitle" type="text" /></div>
-                <div class="admin-col-span-2"><label for="seoPageDescription">Page Description</label><textarea id="seoPageDescription"></textarea></div>
-                <div class="admin-col-span-2"><label for="seoPageOgImage">Page OG Image</label><input id="seoPageOgImage" type="text" /></div>
-              </div>
-              <h3>Hackathon Page SEO</h3>
-              <div class="admin-grid">
-                <div><label for="seoHackathonSlug">Hackathon Slug</label><input id="seoHackathonSlug" type="text" placeholder="e.g. 001" /></div>
-                <div><label for="seoHackathonUseCurrent">Use current event slug</label><select id="seoHackathonUseCurrent"><option value="true">Yes</option><option value="false">No</option></select></div>
-                <div class="admin-col-span-2"><label for="seoHackathonTitle">Hackathon Title</label><input id="seoHackathonTitle" type="text" /></div>
-                <div class="admin-col-span-2"><label for="seoHackathonDescription">Hackathon Description</label><textarea id="seoHackathonDescription"></textarea></div>
-                <div class="admin-col-span-2"><label for="seoHackathonOgImage">Hackathon OG Image</label><input id="seoHackathonOgImage" type="text" /></div>
-              </div>
-              <div class="cta-row">
-                <button id="saveSeoSectionBtn" class="btn btn-primary" type="button">Save SEO Section</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <div data-site-footer></div>
+          </section>
+        </div>
+      </div>
     </div>
-    <script src="/scripts/site.js"></script>
     <script src="/scripts/admin.js"></script>
   </body>
 </html>
