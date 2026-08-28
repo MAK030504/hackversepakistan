@@ -21,10 +21,15 @@ function normalizePath(pathname) {
   return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
 }
 
+function isAdminNavItem(item) {
+  const href = String(item?.href || "").trim();
+  return href === "/admin" || href === "/admin/" || href.startsWith("/admin/");
+}
+
 function navLinks() {
   if (Array.isArray(SITE_CONFIG.navigation) && SITE_CONFIG.navigation.length) {
     return SITE_CONFIG.navigation
-      .filter((item) => item.visible !== false)
+      .filter((item) => item.visible !== false && !isAdminNavItem(item))
       .map((item) => ({ href: item.href || "/", label: item.label || "Link" }));
   }
   return [
@@ -32,7 +37,6 @@ function navLinks() {
     { href: "/hackathons/", label: "Hackathons" },
     { href: "/projects/", label: "Projects" },
     { href: "/about/", label: "About" },
-    { href: "/admin/", label: "Admin" },
   ];
 }
 

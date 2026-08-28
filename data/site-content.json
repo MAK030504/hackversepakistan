@@ -54,8 +54,7 @@
       { "label": "Home", "href": "/", "visible": true },
       { "label": "Hackathons", "href": "/hackathons/", "visible": true },
       { "label": "Projects", "href": "/projects/", "visible": true },
-      { "label": "About", "href": "/about/", "visible": true },
-      { "label": "Admin", "href": "/admin/", "visible": true }
+      { "label": "About", "href": "/about/", "visible": true }
     ]
   },
   "home": {
