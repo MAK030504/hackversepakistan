@@ -1,6 +1,9 @@
-# HackVerse Pakistan - Coming Soon
+# HackVerse Pakistan - Phase 1 Website
 
-Static coming-soon page deployed on Cloudflare Pages, with a Cloudflare Pages Function (`/api/notify`) storing signups (email + WhatsApp) in Cloudflare D1.
+Static multi-page website deployed on Cloudflare Pages, with Cloudflare Pages Functions and D1 for:
+- `/api/notify` subscriber signups (email + WhatsApp)
+- `/api/content` public dynamic website content
+- `/api/admin/content` admin content updates
 
 ## 1) Install dependencies
 
@@ -35,11 +38,32 @@ database_id = "YOUR_DATABASE_ID_HERE"
 npm run db:migrate:remote
 ```
 
+This applies:
+- `0001_create_subscribers.sql`
+- `0002_create_site_content.sql`
+- `0003_create_normalized_cms_tables.sql`
+- `0004_add_phaseb2_cms_fields.sql`
+- `0005_add_media_library.sql`
+
+## 4.1) Configure admin token secret
+
+Set a secret used by the admin API and admin page:
+
+```bash
+wrangler secret put ADMIN_TOKEN
+```
+
+Use the same value in `/admin/` when editing content.
+
 ## 5) Run local preview with Cloudflare runtime
 
 ```bash
 npm run dev
 ```
+
+Then open:
+- `/` public site
+- `/admin/` content management panel
 
 ## 6) Deploy
 
@@ -63,3 +87,19 @@ Add these repository secrets in GitHub:
 - `CLOUDFLARE_ACCOUNT_ID` - your Cloudflare account id
 
 Then push to `main` and the deploy runs automatically.
+
+## Content editing workflow
+
+1. Open `/admin/`
+2. Enter `ADMIN_TOKEN`
+3. Load content (DB or fallback file)
+4. Edit JSON and save
+5. Public pages immediately read from `/api/content` (fallback is `data/site-content.json` if DB has no content yet)
+
+## Phase B CMS APIs
+
+Normalized CMS-backed endpoints are now available:
+- Public: `/api/content` (returns assembled payload from normalized tables, falls back to legacy content)
+- Admin (full compatibility): `/api/admin/content`
+- Admin (modular): `/api/admin/settings`, `/api/admin/hackathons`, `/api/admin/projects`
+- Admin (media): `/api/admin/media`

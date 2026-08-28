@@ -3,91 +3,133 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HackVerse Pakistan | Coming Soon</title>
+    <title>HackVerse Pakistan | Build. Compete. Connect.</title>
     <meta
       name="description"
-      content="HackVerse Pakistan is launching soon. Build, collaborate, and innovate with Pakistan's next generation of hackers, builders, and creators."
+      content="HackVerse Pakistan is building a hackathon culture in Pakistan. Join HackVerse #001, connect with builders, and ship real projects."
     />
+    <meta property="og:title" content="HackVerse Pakistan" />
+    <meta
+      property="og:description"
+      content="Join HackVerse #001 and be part of Pakistan's next builder community."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hackverse.pk/" />
+    <meta property="og:image" content="/social-preview.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HackVerse Pakistan" />
+    <meta
+      name="twitter:description"
+      content="Build projects, compete in hackathons, and connect with Pakistan's builder community."
+    />
+    <meta name="twitter:image" content="/social-preview.svg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@500;600;700&family=Ruda:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <p class="brand">HackVerse Pakistan</p>
-        <p class="tagline">Code. Build. Belong.</p>
-      </header>
-
-      <main class="hero">
-        <p class="kicker">A new builder community is loading...</p>
-        <h1>Something extraordinary is coming soon.</h1>
-        <p class="lead">
-          Building a Hackathon Culture in Pakistan.
-        </p>
-
-        <section class="countdown-card" aria-label="Launch countdown">
-          <h2>Launch Countdown</h2>
-          <div class="countdown-grid">
-            <div class="timebox">
-              <span id="days">00</span>
-              <small>Days</small>
+    <div class="site">
+      <div data-site-header></div>
+      <main class="site-main">
+        <section class="section hero" id="homeSection-hero" data-home-section="hero">
+          <div class="container">
+            <p class="kicker" id="homeKicker">HackVerse Pakistan</p>
+            <h1 id="homeTitle">Building a hackathon culture in Pakistan.</h1>
+            <p class="lead" id="homeLead">
+              We bring student builders, developers, designers, and creators together through
+              practical hackathons and project-driven learning.
+            </p>
+            <div class="cta-row">
+              <a
+                class="btn btn-primary cta-track"
+                data-cta="home_register"
+                data-dynamic-link="register"
+                id="homePrimaryCta"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Register for HackVerse #001</a
+              >
+              <a
+                class="btn btn-secondary cta-track"
+                data-cta="home_join_community"
+                data-dynamic-link="community"
+                id="homeSecondaryCta"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Join the Community</a
+              >
             </div>
-            <div class="timebox">
-              <span id="hours">00</span>
-              <small>Hours</small>
+            <div id="countdownRoot" class="metrics" aria-label="Countdown to next hackathon">
+              <div class="metric"><strong id="days">00</strong><span>Days</span></div>
+              <div class="metric"><strong id="hours">00</strong><span>Hours</span></div>
+              <div class="metric"><strong id="minutes">00</strong><span>Minutes</span></div>
+              <div class="metric"><strong id="seconds">00</strong><span>Seconds</span></div>
             </div>
-            <div class="timebox">
-              <span id="minutes">00</span>
-              <small>Minutes</small>
-            </div>
-            <div class="timebox">
-              <span id="seconds">00</span>
-              <small>Seconds</small>
-            </div>
+            <p class="lead"><span id="countdownLabel">Next launch date</span>: <strong id="launchDate">19 Sep 2026</strong></p>
           </div>
-          <p class="launch-date">
-            Target launch:
-            <time id="launchDate" datetime="2026-09-19T18:00:00+05:00">19 Sep 2026</time>
-          </p>
         </section>
 
-        <form class="notify-form" id="notifyForm" novalidate>
-          <label class="visually-hidden" for="notifyEmail">Email</label>
-          <input
-            id="notifyEmail"
-            name="email"
-            type="email"
-            placeholder="Enter your email address"
-            autocomplete="email"
-            required
-          />
-          <label class="visually-hidden" for="notifyWhatsapp">WhatsApp number</label>
-          <input
-            id="notifyWhatsapp"
-            name="whatsapp"
-            type="tel"
-            placeholder="WhatsApp number (e.g. +923001234567)"
-            autocomplete="tel"
-            required
-          />
-          <button class="btn btn-primary" type="submit">Notify Me</button>
-          <a class="btn btn-secondary" href="#" aria-disabled="true">Partnerships Opening Soon</a>
-        </form>
-        <p id="notifyMessage" class="notify-message" role="status" aria-live="polite"></p>
+        <section class="section section-tight" id="homeSection-featuredHackathon" data-home-section="featuredHackathon">
+          <div class="container">
+            <h2>The next hackathon</h2>
+            <div id="nextEventRoot"></div>
+          </div>
+        </section>
 
-        <ul class="highlights" aria-label="What to expect">
-          <li>National hackathons and coding challenges</li>
-          <li>Mentorship from industry experts</li>
-          <li>Community projects with real impact</li>
-        </ul>
+        <section class="section section-tight" id="homeSection-notify" data-home-section="notify">
+          <div class="container">
+            <h2>Get launch updates</h2>
+            <p class="lead">
+              Join the notify list to receive reminders for registration updates, deadlines, and
+              event announcements.
+            </p>
+            <form class="notify-form" id="notifyForm" novalidate>
+              <label class="visually-hidden" for="notifyEmail">Email address</label>
+              <input
+                id="notifyEmail"
+                name="email"
+                type="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                required
+              />
+              <label class="visually-hidden" for="notifyWhatsapp">WhatsApp number</label>
+              <input
+                id="notifyWhatsapp"
+                name="whatsapp"
+                type="tel"
+                placeholder="WhatsApp number (e.g. +923001234567)"
+                autocomplete="tel"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Notify me</button>
+            </form>
+            <p id="notifyMessage" class="notify-message" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="section section-tight" id="homeSection-valueCards" data-home-section="valueCards">
+          <div class="container grid grid-3" id="valueCardsRoot"></div>
+        </section>
+
+        <section class="section section-tight" id="homeSection-projectsTeaser" data-home-section="projectsTeaser">
+          <div class="container">
+            <h2>Project showcase</h2>
+            <div id="projectTeaserRoot" class="grid grid-3"></div>
+          </div>
+        </section>
       </main>
+      <div data-site-footer></div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="/scripts/site.js"></script>
+    <script src="/scripts/home.js"></script>
+    <script src="/scripts/analytics.js"></script>
   </body>
 </html>
